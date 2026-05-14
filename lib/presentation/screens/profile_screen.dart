@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopsmart/core/theme/bloc/theme_bloc.dart';
+import 'package:shopsmart/core/theme/bloc/theme_event.dart';
 import 'package:shopsmart/features/auth/bloc/auth_bloc.dart';
 import 'package:shopsmart/features/auth/bloc/auth_event.dart';
 import 'package:shopsmart/presentation/screens/order_history_screen.dart';
@@ -74,6 +76,11 @@ class ProfileScreen extends StatelessWidget {
               title: const Text("Dark Mode"),
 
               trailing: const Icon(Icons.settings),
+
+              onTap: () {
+                // Toggle dark mode
+                context.read<ThemeBloc>().add(ToggleThemeEvent());
+              },
             ),
 
             ListTile(

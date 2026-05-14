@@ -80,7 +80,7 @@ class ShopSmart extends StatelessWidget {
               theme: AppTheme.lightTheme,
 
               darkTheme: AppTheme.darkTheme,
-
+              
               themeMode: state.isDarkMode ? ThemeMode.dark : ThemeMode.light,
 
               initialRoute: RouteNames.login,

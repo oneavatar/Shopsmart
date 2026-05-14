@@ -47,13 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 // search bar
                 TextField(
                   controller: searchController,
-
+                  style: const TextStyle(color: Colors.black87),
                   onChanged: (value) {
                     setState(() {});
                   },
                   decoration: InputDecoration(
                     hintText: 'Search products',
-                    prefixIcon: const Icon(Icons.search),
+                    hintStyle: const TextStyle(color: Colors.black54),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black54),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide.none,
@@ -163,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
 
                           SizedBox(
-                            height: 240,
+                            height: 310,
 
                             child: ListView.separated(
                               scrollDirection: Axis.horizontal,
@@ -175,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               itemBuilder: (context, index) {
                                 return SizedBox(
-                                  width: 180,
+                                  width: 190,
 
                                   child: ProductCart(
                                     product: recommendedProducts[index],

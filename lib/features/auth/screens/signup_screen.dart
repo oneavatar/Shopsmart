@@ -103,8 +103,10 @@ class _SignupScreenState extends State<SignupScreen>
                         const SizedBox(height: 40),
                         TextField(
                           controller: nameController,
+                          style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
                             hintText: 'Full Name',
+                            hintStyle: const TextStyle(color: Colors.black54),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
@@ -116,8 +118,10 @@ class _SignupScreenState extends State<SignupScreen>
                         const SizedBox(height: 20),
                         TextField(
                           controller: emailController,
+                          style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
                             hintText: 'Email',
+                            hintStyle: const TextStyle(color: Colors.black54),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
@@ -130,8 +134,10 @@ class _SignupScreenState extends State<SignupScreen>
                         TextField(
                           controller: passwordController,
                           obscureText: true,
+                          style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
                             hintText: 'Password',
+                            hintStyle: const TextStyle(color: Colors.black54),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
@@ -144,8 +150,10 @@ class _SignupScreenState extends State<SignupScreen>
                         TextField(
                           controller: confirmPasswordController,
                           obscureText: true,
+                          style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
                             hintText: 'Confirm Password',
+                            hintStyle: const TextStyle(color: Colors.black54),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
