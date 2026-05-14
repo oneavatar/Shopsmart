@@ -83,7 +83,7 @@ class ShopSmart extends StatelessWidget {
               
               themeMode: state.isDarkMode ? ThemeMode.dark : ThemeMode.light,
 
-              initialRoute: RouteNames.login,
+              initialRoute: RouteNames.splash,
 
               onGenerateRoute: AppRoutes.generateRoute,
             );
