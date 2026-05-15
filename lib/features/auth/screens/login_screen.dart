@@ -67,10 +67,12 @@ class _LoginScreenState extends State<LoginScreen>
                 },
                 builder: (context, state) {
                   return SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
 
-                      children: [
+                        children: [
                         Transform.translate(
                           offset: Offset(0, offset),
 
@@ -184,6 +186,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ],
                         ),
                       ],
+                    ),
                     ),
                   );
                 },

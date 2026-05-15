@@ -76,9 +76,11 @@ class _SignupScreenState extends State<SignupScreen>
 
                 builder: (context, state) {
                   return SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                         Transform.translate(
                           offset: Offset(0, offset),
                           child: Image.asset(
@@ -229,6 +231,7 @@ class _SignupScreenState extends State<SignupScreen>
                           ],
                         ),
                       ],
+                    ),
                     ),
                   );
                 },
