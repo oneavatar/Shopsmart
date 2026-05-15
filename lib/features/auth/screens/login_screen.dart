@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopsmart/core/utils/validators.dart';
 import 'package:shopsmart/features/auth/bloc/auth_bloc.dart';
 import 'package:shopsmart/features/auth/bloc/auth_event.dart';
 import 'package:shopsmart/features/auth/bloc/auth_state.dart';
@@ -37,6 +38,8 @@ class _LoginScreenState extends State<LoginScreen>
 
   final passwordController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +69,11 @@ class _LoginScreenState extends State<LoginScreen>
                   return SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                    
+
                       children: [
                         Transform.translate(
                           offset: Offset(0, offset),
-                    
+
                           child: Image.asset(
                             'assets/icons/app_icon.png',
                             height: 150,
@@ -79,26 +82,27 @@ class _LoginScreenState extends State<LoginScreen>
                         SizedBox(height: 30),
                         const Text(
                           "Welcome Back",
-                    
+
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                    
+
                         const SizedBox(height: 10),
-                    
+
                         const Text(
                           "Login to continue shopping",
-                    
+
                           style: TextStyle(
                             color: Color.fromARGB(255, 38, 37, 37),
                             fontSize: 16,
                           ),
                         ),
-                    
+
                         const SizedBox(height: 40),
-                        TextField(
+                        TextFormField(
+                          validator: Validators.validateEmail,
                           controller: emailController,
                           style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
@@ -108,14 +112,15 @@ class _LoginScreenState extends State<LoginScreen>
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide.none,
                             ),
-                    
+
                             filled: true,
-                    
+
                             fillColor: Colors.grey.shade300,
                           ),
                         ),
                         SizedBox(height: 20),
-                        TextField(
+                        TextFormField(
+                          validator: Validators.validatePassword,
                           controller: passwordController,
                           style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
@@ -131,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen>
                           obscureText: true,
                         ),
                         SizedBox(height: 30),
-                    
+
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -142,18 +147,20 @@ class _LoginScreenState extends State<LoginScreen>
                                 44,
                                 54,
                               ),
-                    
+
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
                             ),
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                LoginRequested(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                ),
-                              );
+                              if (formKey.currentState?.validate() ?? false) {
+                                context.read<AuthBloc>().add(
+                                  LoginRequested(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  ),
+                                );
+                              }
                             },
                             child: Text(
                               'Login',

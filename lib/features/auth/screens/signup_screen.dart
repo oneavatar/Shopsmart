@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopsmart/core/utils/validators.dart';
 import 'package:shopsmart/features/auth/bloc/auth_bloc.dart';
 import 'package:shopsmart/features/auth/bloc/auth_event.dart';
 import 'package:shopsmart/features/auth/bloc/auth_state.dart';
@@ -23,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen>
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -101,7 +103,8 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         const SizedBox(height: 40),
-                        TextField(
+                        TextFormField(
+                          validator: Validators.validateName,
                           controller: nameController,
                           style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
@@ -116,7 +119,8 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        TextField(
+                        TextFormField(
+                          validator: Validators.validateEmail,
                           controller: emailController,
                           style: const TextStyle(color: Colors.black87),
                           decoration: InputDecoration(
@@ -131,7 +135,8 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        TextField(
+                        TextFormField(
+                          validator: Validators.validatePassword,
                           controller: passwordController,
                           obscureText: true,
                           style: const TextStyle(color: Colors.black87),
@@ -147,7 +152,12 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        TextField(
+                        TextFormField(
+                          validator: (value) =>
+                              Validators.validateConfirmPassword(
+                                value,
+                                passwordController.text,
+                              ),
                           controller: confirmPasswordController,
                           obscureText: true,
                           style: const TextStyle(color: Colors.black87),
@@ -178,12 +188,14 @@ class _SignupScreenState extends State<SignupScreen>
                               ),
                             ),
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                SignupRequested(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                ),
-                              );
+                              if (formKey.currentState?.validate() ?? false) {
+                                context.read<AuthBloc>().add(
+                                  SignupRequested(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  ),
+                                );
+                              }
                             },
                             child: state is AuthLoading
                                 ? const CircularProgressIndicator(
