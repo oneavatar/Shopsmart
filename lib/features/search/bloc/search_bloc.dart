@@ -7,7 +7,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final List<ProductModel> allProducts;
 
   SearchBloc(this.allProducts)
-    : super(SearchState(FilteredProducts: allProducts)) {
+    : super(SearchState(filteredProducts: allProducts)) {
     on<SearchProduct>((event, emit) {
       final filtered = allProducts
           .where(
@@ -15,7 +15,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
                 product.title.toLowerCase().contains(event.query.toLowerCase()),
           )
           .toList();
-      emit(SearchState(FilteredProducts: filtered));
+      emit(SearchState(filteredProducts: filtered));
     });
   }
 }

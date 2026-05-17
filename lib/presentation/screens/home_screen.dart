@@ -6,6 +6,7 @@ import 'package:shopsmart/features/products/bloc/product_event.dart';
 import 'package:shopsmart/features/products/bloc/product_state.dart';
 import 'package:shopsmart/presentation/screens/product_cart.dart';
 import 'package:shopsmart/presentation/widgets/banner_ad_widget.dart';
+import 'package:shopsmart/presentation/widgets/product_skeleton.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -136,7 +137,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 BlocBuilder<ProductBloc, ProductState>(
                   builder: (context, state) {
                     if (state is ProductLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.62,
+                        ),
+                        itemCount: 6,
+                        itemBuilder: (context, index) => const ProductSkeleton(),
+                      );
                     }
                     if (state is ProductLoaded) {
                       final recommendedProducts =

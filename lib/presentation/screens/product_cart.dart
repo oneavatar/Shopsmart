@@ -135,14 +135,14 @@ class ProductCart extends StatelessWidget {
                 width: double.infinity,
 
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     context.read<CartBloc>().add(AddToCart(product));
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Added to cart")),
                     );
 
-                    InterstitialAdService().showAd();
+                    await InterstitialAdService().showAd();
                   },
 
                   child: const Text("Add to Cart"),

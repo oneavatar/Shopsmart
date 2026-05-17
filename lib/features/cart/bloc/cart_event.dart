@@ -13,3 +13,8 @@ class RemoveFromCart extends CartEvent {
 
   RemoveFromCart(this.product);
 }
+
+class ClearCart extends CartEvent {}
+
+class LoadCart extends CartEvent {}
+

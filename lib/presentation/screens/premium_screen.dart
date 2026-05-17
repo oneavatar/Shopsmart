@@ -10,6 +10,20 @@ class PremiumScreen extends StatefulWidget {
 
 class _PremiumScreenState extends State<PremiumScreen> {
   bool loading = false;
+  bool isPremium = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPremiumStatus();
+  }
+
+  Future<void> _checkPremiumStatus() async {
+    final status = await RevenueCatService.isPremiumUser();
+    setState(() {
+      isPremium = status;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,33 +67,35 @@ class _PremiumScreenState extends State<PremiumScreen> {
               height: 60,
 
               child: ElevatedButton(
-                onPressed: loading
+                onPressed: (loading || isPremium)
                     ? null
                     : () async {
                         setState(() {
                           loading = true;
                         });
 
-                        final success =
+                        final errorMessage =
                             await RevenueCatService.purchasePremium();
 
                         setState(() {
                           loading = false;
+                          if (errorMessage == null) isPremium = true;
                         });
 
-                        if (!mounted) return;
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              success ? "Premium Activated" : "Purchase Failed",
+                              errorMessage ?? "Premium Activated",
                             ),
+                            backgroundColor: errorMessage == null ? Colors.green : Colors.red,
                           ),
                         );
                       },
 
                 child: loading
                     ? const CircularProgressIndicator()
-                    : const Text("Upgrade Now"),
+                    : Text(isPremium ? "Premium Active" : "Upgrade Now"),
               ),
             ),
           ],

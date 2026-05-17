@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shopsmart/core/services/admob_service.dart';
+import 'package:shopsmart/core/services/premium_service.dart';
 
 class InterstitialAdService {
   InterstitialAd? interstitialAd;
 
-  void loadAd() {
+  Future<void> loadAd() async {
+    bool isPremium = await PremiumService.isPremium();
+    if (isPremium) return;
+
     InterstitialAd.load(
       adUnitId: AdMobService.interstitialAdUnitId,
       request: const AdRequest(),
@@ -21,7 +25,10 @@ class InterstitialAdService {
     );
   }
 
-  void showAd() {
+  Future<void> showAd() async {
+    bool isPremium = await PremiumService.isPremium();
+    if (isPremium) return;
+
     if (interstitialAd != null) {
       interstitialAd!.show();
 

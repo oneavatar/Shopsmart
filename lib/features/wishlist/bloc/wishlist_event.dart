@@ -7,3 +7,6 @@ class ToggleWishlist extends WishlistEvent {
 
   ToggleWishlist(this.product);
 }
+
+class LoadWishlist extends WishlistEvent {}
+

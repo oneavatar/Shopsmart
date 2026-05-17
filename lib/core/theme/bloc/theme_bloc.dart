@@ -11,12 +11,13 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       await prefs.setBool('isDarkMode', newThemeMode);
       emit(ThemeState(isDarkMode: newThemeMode));
     });
-    _loadTheme();
-  }
 
-  Future<void> _loadTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    emit(ThemeState(isDarkMode: isDarkMode));
+    on<LoadThemeEvent>((event, emit) async {
+      final prefs = await SharedPreferences.getInstance();
+      final isDarkMode = prefs.getBool('isDarkMode') ?? false;
+      emit(ThemeState(isDarkMode: isDarkMode));
+    });
+
+    add(LoadThemeEvent());
   }
 }

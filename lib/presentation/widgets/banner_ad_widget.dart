@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shopsmart/core/services/admob_service.dart';
+import 'package:shopsmart/core/services/premium_service.dart';
 
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
@@ -12,11 +13,22 @@ class BannerAdWidget extends StatefulWidget {
 class BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? bannerAd;
   bool isAdLoaded = false;
+  bool isPremium = false;
 
   @override
   void initState() {
     super.initState();
-    loadBannerAd();
+    _checkPremiumAndLoadAd();
+  }
+
+  Future<void> _checkPremiumAndLoadAd() async {
+    isPremium = await PremiumService.isPremium();
+    if (mounted) {
+      setState(() {});
+    }
+    if (!isPremium) {
+      loadBannerAd();
+    }
   }
 
   void loadBannerAd() {
@@ -26,9 +38,11 @@ class BannerAdWidgetState extends State<BannerAdWidget> {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          setState(() {
-            isAdLoaded = true;
-          });
+          if (mounted) {
+            setState(() {
+              isAdLoaded = true;
+            });
+          }
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
@@ -47,8 +61,11 @@ class BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isPremium) {
+      return const SizedBox.shrink();
+    }
     if (!isAdLoaded || bannerAd == null) {
-      return const SizedBox();
+      return const SizedBox.shrink();
     }
     return SizedBox(
       height: bannerAd!.size.height.toDouble(),

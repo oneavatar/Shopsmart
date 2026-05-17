@@ -60,9 +60,12 @@ class _LoginScreenState extends State<LoginScreen>
                       MaterialPageRoute(builder: (_) => MainNavigationScreen()),
                     );
                   } else if (state is AuthFailure) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
                 },
                 builder: (context, state) {
